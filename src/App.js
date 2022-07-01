@@ -1,23 +1,41 @@
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
 import './App.css';
+import "antd/dist/antd.css";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import PrivateRoute from './component/PrivateRoute';
+import Auth from "./pages/Auth";
+import BusinessOwner from "./pages/BusinessOwner";
 
 function App() {
+  useEffect(() => {
+    let mode = process.env.NODE_ENV;
+    // console.log(mode, "mode");
+    if (mode === "production") {
+      console.log = () => { }
+    }
+
+  }, [])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Navigate to="/dashboard" replace />} />
+          <Route path="/login" element={<Auth />} />
+          <Route path="/dashboard"
+            element={
+              <PrivateRoute>
+                <BusinessOwner />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+
     </div>
   );
 }
