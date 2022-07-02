@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Typography, Row, Col, Tooltip, Pagination, Button, Modal } from 'antd';
 import { EditOutlined, DeleteOutlined, AppstoreAddOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import OrderForm from './OrderForm';
+import {customNotification, msgType} from "../../utils/customNotification";
 
 
 const { Title, Text } = Typography;
@@ -46,6 +47,7 @@ const Dashboard = () => {
       tempDeletedOrdr.splice(0, tempDeletedOrdr.length);
       tempDeletedOrdr.push(id);
     } else {
+      customNotification({message: "Please wait this order is deleting.", type: msgType.warning})
       console.log("no no wait untill this order get deleted");
     }
 
