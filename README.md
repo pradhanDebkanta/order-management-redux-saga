@@ -1,7 +1,7 @@
 # Order management system
 This project is build using _Redux_.
 ### `Using technology and tools`
-    1) Redux, Redux Thunk
+    1) Redux, Redux Saga
     2) Ant Design
     3) Google oAuth2.0
 _Here I made a advanced folder structure of Redux Store and a production level config file._
@@ -13,7 +13,7 @@ _Here I made a advanced folder structure of Redux Store and a production level c
     5) user can logout from dashboard page by clicking logout button.
     6) If user login and close the tab, he/she can direct go to dashboard at next time.
 ### `Demo of this project`
- [https://dk-order-management-system.netlify.app/](https://dk-order-management-system.netlify.app/) 
+ [https://dk-order-managenent.netlify.app/](https://dk-order-managenent.netlify.app/) 
  
  ## There is a json server for this app
  [https://github.com/pradhanDebkanta/fake-server](https://github.com/pradhanDebkanta/fake-server)
