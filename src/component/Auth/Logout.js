@@ -3,7 +3,7 @@ import { GoogleLogout } from 'react-google-login';
 import { clientId } from '../../config/AppConfig';
 import { signOut } from '../../store/actions/auth';
 import { useDispatch } from "react-redux";
-import "../../assert/css/navbar.css";
+import "../../assets/css/navbar.css";
 import { message } from "antd"
 
 

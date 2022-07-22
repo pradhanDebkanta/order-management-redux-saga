@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "antd/dist/antd.css";
 import Logout from '../Auth/Logout';
-import "../../assert/css/navbar.css";
+import "../../assets/css/navbar.css";
 import { useSelector, } from 'react-redux';
 import { Avatar, Modal, Card, Tooltip } from 'antd';
 const { Meta } = Card;
@@ -13,12 +13,13 @@ const Navbar = () => {
     const [email, setEmail] = useState("");
     const [isModalOpen, setModalOpen] = useState(false);
     useEffect(() => {
-        let name = userData?.name.split(" ");
-        let lt = name[0].slice(0, 1) + name[1].slice(0, 1);
-        setLetter(lt.toUpperCase());
-        setName(userData?.name);
-        setEmail(userData?.email);
-
+        let name = userData?.name?.split(" ");
+        if (name) {
+            let lt = name[0].slice(0, 1) + name[1].slice(0, 1);
+            setLetter(lt.toUpperCase());
+            setName(userData?.name);
+            setEmail(userData?.email);
+        }
 
     }, [userData]);
 

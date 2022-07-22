@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import "../../assert/css/global.css";
+import "../../assets/css/global.css";
 import Navbar from '../../component/AdminDashboard/Navbar';
 import Dashboard from '../../component/AdminDashboard/Dashboard';
 

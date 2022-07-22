@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Form, Input, Select, InputNumber } from 'antd';
 import { createOrder, editOrder } from "../../store/actions/dashboard";
 import { useDispatch, useSelector } from 'react-redux';
-import { customNotification, msgType } from '../../utils/customNotification';
+import { customNotification, msgType } from '../../utils/notification/customNotification';
 
 const { Option } = Select;
 const products = [

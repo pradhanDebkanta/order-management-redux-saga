@@ -1,10 +1,10 @@
-import { CREATE_ORDER_SUCCESS, DELETE_ORDER_SUCCESS, EDIT_ORDER_SUCCESS, GET_ORDER_SUCCESS, ERROR_IN_ORDER } from "../constants/order";
+import { CREATE_ORDER_SUCCESS, DELETE_ORDER_SUCCESS, EDIT_ORDER_SUCCESS, GET_ORDER_SUCCESS, ERROR_IN_ORDER, ORDER_LOADING_START, ORDER_LOADING_END } from "../constants/order";
 
 const initialState = {
     orderList: [],
     totalOrders: 0,
     perPageItem: 10,
-    loading: true,
+    loading: false,
     error: false,
     errormessage: '',
 };
@@ -27,7 +27,6 @@ const orderDetails = (state = initialState, action) => {
                 ...state,
                 orderList: deepCopy,
                 totalOrders: currTotalItem,
-                loading: false,
                 error: false,
                 errormessage: '',
             }
@@ -38,7 +37,6 @@ const orderDetails = (state = initialState, action) => {
                 ...state,
                 orderList: temp1,
                 totalOrders: currTotalItem,
-                loading: false,
                 error: false,
                 errormessage: '',
             }
@@ -48,7 +46,6 @@ const orderDetails = (state = initialState, action) => {
             return {
                 ...state,
                 orderList: temp,
-                loading: false,
                 error: false,
                 errormessage: '',
             }
@@ -58,18 +55,25 @@ const orderDetails = (state = initialState, action) => {
                 orderList: payload.data,
                 totalOrders: payload.totalItem,
                 perPageItem: payload.perPageItem,
-                loading: false,
                 error: false,
                 errormessage: '',
-
             }
         case ERROR_IN_ORDER:
             return {
                 ...state,
-                loading: false,
                 error: true,
                 errormessage: payload,
 
+            }
+        case ORDER_LOADING_START:
+            return {
+                ...state,
+                loading: true,
+            }
+        case ORDER_LOADING_END:
+            return {
+                ...state,
+                loading: false,
             }
         default:
             return state

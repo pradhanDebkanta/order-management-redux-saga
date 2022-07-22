@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import "antd/dist/antd.css";
-import "../../assert/css/dashboard.css";
+import "../../assets/css/dashboard.css";
 import { useSelector, useDispatch } from 'react-redux';
 import { getLimitedOrder, deleteOrder } from "../../store/actions/dashboard";
 import { v4 as uuidv4 } from "uuid";
 import { Typography, Row, Col, Tooltip, Pagination, Button, Modal } from 'antd';
 import { EditOutlined, DeleteOutlined, AppstoreAddOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import OrderForm from './OrderForm';
-import {customNotification, msgType} from "../../utils/customNotification";
+import { customNotification, msgType } from "../../utils/notification/customNotification";
+import MyLoader from '../../utils/loader/MyLoader';
+import ErrorPage from '../../utils/errorPage/ErrorPage';
 
 
 const { Title, Text } = Typography;
@@ -15,7 +17,7 @@ const { confirm } = Modal;
 const defaultPageSize = [10, 25, 50, 100]
 
 const Dashboard = () => {
-  const { orderList, totalOrders } = useSelector(store => store.orderDetails);
+  const { orderList, totalOrders, loading, errormessage } = useSelector(store => store.orderDetails);
   const dispatch = useDispatch();
   const [pageNo, setPageNo] = useState(1);
   const [itemCount, setItemCount] = useState(defaultPageSize[0]);
@@ -24,6 +26,7 @@ const Dashboard = () => {
   const [initFormData, setInitForm] = useState({});
 
   const tempDeletedOrdr = [];
+  console.log(loading, "loading");
 
 
   useEffect(() => {
@@ -47,7 +50,7 @@ const Dashboard = () => {
       tempDeletedOrdr.splice(0, tempDeletedOrdr.length);
       tempDeletedOrdr.push(id);
     } else {
-      customNotification({message: "Please wait this order is deleting.", type: msgType.warning})
+      customNotification({ message: "Please wait this order is deleting.", type: msgType.warning })
       console.log("no no wait untill this order get deleted");
     }
 
@@ -209,46 +212,60 @@ const Dashboard = () => {
 
   }
   return (
-    <div>
-      <div style={{ display: "flex", justifyContent: "center", color: "#4D4C7D" }}>
-        <Title level={2}>Order Details</Title>
-      </div>
-      <div className='createOrderContainer'>
-        <div className='createOrderBox'>
-          <div></div>
-          <div>
-            <Button type="primary" icon={<AppstoreAddOutlined />} size={"large"} onClick={newOrder}>
-              Create Order
-            </Button>
-          </div>
+    <>{
+      loading ? (
+        <div>
+          <MyLoader />
         </div>
+      ) : (
+        <>
+          {errormessage === "Network Error" ? (
+            <ErrorPage />
+          ) : (
+            <div>
+              <div style={{ display: "flex", justifyContent: "center", color: "#4D4C7D" }}>
+                <Title level={2}>Order Details</Title>
+              </div>
+              <div className='createOrderContainer'>
+                <div className='createOrderBox'>
+                  <div></div>
+                  <div>
+                    <Button type="primary" icon={<AppstoreAddOutlined />} size={"large"} onClick={newOrder}>
+                      Create Order
+                    </Button>
+                  </div>
+                </div>
 
-      </div>
-      <div className='ordersContainer'>
-        <div style={{ paddingBottom: "1.25rem" }}>
-          <Row gutter={[16, 16]}>
-            {/* {console.log(orderCards, "order cards")} */}
-            {orderCards}
-          </Row>
-        </div>
+              </div>
+              <div className='ordersContainer'>
+                <div style={{ paddingBottom: "1.25rem" }}>
+                  <Row gutter={[16, 16]}>
+                    {/* {console.log(orderCards, "order cards")} */}
+                    {orderCards}
+                  </Row>
+                </div>
 
-      </div>
-      <div className='paginationContainer'>
-        <div className='paginationBox'>
-          <div></div>
-          <div className='pagination'>
-            <Pagination showQuickJumper defaultCurrent={pageNo} total={totalOrders} onChange={onPageChange} pageSizeOptions={defaultPageSize} />
-          </div>
-        </div>
-      </div>
+              </div>
+              <div className='paginationContainer'>
+                <div className='paginationBox'>
+                  <div></div>
+                  <div className='pagination'>
+                    <Pagination showQuickJumper defaultCurrent={pageNo} total={totalOrders} onChange={onPageChange} pageSizeOptions={defaultPageSize} />
+                  </div>
+                </div>
+              </div>
 
-      {
-        isModalOpen && (
-          <OrderForm onAction={onAction} initData={initFormData} open={isModalOpen} />
-        )
-      }
+              {
+                isModalOpen && (
+                  <OrderForm onAction={onAction} initData={initFormData} open={isModalOpen} />
+                )
+              }
 
-    </div>
+            </div>
+          )}
+        </>
+      )}
+    </>
   )
 }
 

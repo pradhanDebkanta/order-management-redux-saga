@@ -4,7 +4,7 @@ const initialState = {
     userData: {},
     // userRole: "",
     isAuthenticated: false,
-    loading: true,
+    loading: false,
     error: false,
     errormessage: '',
 }

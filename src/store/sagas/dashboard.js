@@ -1,8 +1,8 @@
 import { takeEvery, all, put, takeLatest } from "redux-saga/effects";
 import { CREATE_ORDER, EDIT_ORDER, DELETE_ORDER, GET_ORDER, GET_ALLL_ORDER } from "../constants/order";
-import { getAllOrderSuccess, getLimitedOrderSuccess, editOrderSuccess, createOrderSuccess, deleteOrderSuccess, orderError } from "../actions/dashboard";
+import { getAllOrderSuccess, getLimitedOrderSuccess, editOrderSuccess, createOrderSuccess, deleteOrderSuccess, orderError, startLoading, endLoading } from "../actions/dashboard";
 import ApiService from "../../services/apiService";
-import { customNotification, msgType } from "../../utils/customNotification";
+import { customNotification, msgType } from "../../utils/notification/customNotification";
 
 function* getAllOrderSaga() {
     yield takeEvery(GET_ALLL_ORDER, function* (action) {
@@ -29,6 +29,7 @@ function* getAllOrderSaga() {
 function* getLimitedOrderSaga() {
     yield takeLatest(GET_ORDER, function* (action) {
         // console.log("getLimitedOrderSaga call", action);
+        yield put(startLoading());
         const { payload: { pageNo, itemCount } } = action;
         try {
             const { data, headers, status } = yield ApiService.get(`/orderDetails?_page=${pageNo}&_limit=${itemCount}`);
@@ -46,6 +47,8 @@ function* getLimitedOrderSaga() {
             console.log(e);
             customNotification({ message: e.message, type: msgType.error });
             yield put(orderError(e.message));
+        } finally {
+            yield put(endLoading());
         }
     })
 }

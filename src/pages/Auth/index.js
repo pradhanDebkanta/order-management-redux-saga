@@ -5,7 +5,7 @@ import { clientId } from '../../config/AppConfig';
 import { useSelector } from "react-redux";
 import { Navigate } from 'react-router-dom';
 import { Typography } from 'antd';
-import "../../assert/css/login.css";
+import "../../assets/css/login.css";
 
 const { Title } = Typography;
 

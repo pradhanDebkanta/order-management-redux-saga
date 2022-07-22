@@ -4,7 +4,7 @@ import { clientId } from '../../config/AppConfig';
 import { useSelector, useDispatch } from "react-redux";
 import { signIn, signInError } from '../../store/actions/auth';
 import { message } from "antd";
-import { customNotification, msgType } from '../../utils/customNotification';
+import { customNotification, msgType } from '../../utils/notification/customNotification';
 
 const Login = () => {
     const dispatch = useDispatch();

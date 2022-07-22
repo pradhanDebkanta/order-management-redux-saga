@@ -8,7 +8,9 @@ import {
     EDIT_ORDER_SUCCESS,
     GET_ALLL_ORDER_SUCCESS,
     DELETE_ORDER_SUCCESS,
-    GET_ORDER_SUCCESS
+    GET_ORDER_SUCCESS,
+    ORDER_LOADING_START,
+    ORDER_LOADING_END
 } from "../constants/order";
 
 export const getAllOrder = () => {
@@ -84,5 +86,18 @@ export const deleteOrderSuccess = (data) => {
     return {
         type: DELETE_ORDER_SUCCESS,
         payload: data
+    };
+}
+
+export const startLoading = () => {
+    console.log("startLoading");
+    return {
+        type: ORDER_LOADING_START
+    };
+}
+export const endLoading = () => {
+    console.log("endLoading");
+    return {
+        type: ORDER_LOADING_END
     };
 }
